@@ -1,0 +1,38 @@
+$primary-color: #6C63FF;
+
+.signin,
+.signup {
+    min-height: 80vh;
+    min-width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.svg-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .register_svg,
+    .login_svg {
+        width: 60%;
+    }
+
+    .signup-svg,
+    .signin-svg {
+        text-align: center;
+    }
+
+    @media (max-width: 768px) {
+        display: none;
+    }
+}
+
+.form-warning {
+    border: 1px solid red;
+}
+
+.text-danger {
+    color: red;
+}
