@@ -11,24 +11,16 @@
 			<div class="column is-12">
 				<h2 class="is-size-2 has-text-centered">Latest products</h2>
 			</div>
-
-			<div class="column is-3" v-for="product in latestProducts" v-bind:key="product.id">
-				<div class="box">
-					<figure class="image mb-4">
-						<img v-bind:src="product.image" v-bind:alt="product.name" />
-					</figure>
-
-					<h3 class="is-size-4">{{ product.name }}</h3>
-					<p class="is-size-6 has-text-grey">{{ product.price }}</p>
-
-					View Details
-				</div>
-			</div>
+			
+			<ProductBox v-for="product in latestProducts" v-bind:key="product.id" v-bind:product="product" />
 		</div>
 	</div>
 </template>
 
 <script>
+import { supabase } from '@/supabase'
+import ProductBox from '@/components/ProductBox.vue'
+
 export default {
 	name: 'HomePage',
 	data() {
@@ -36,12 +28,29 @@ export default {
 			latestProducts: []
 		}
 	},
+	components: {
+		ProductBox
+	},
 	mounted() {
 		document.title = "Home | ZedStore"
+		this.getLatestProducts()
 	},
-	computed: {
-		user() {
-			return this.$store.state.currentUser;
+	methods: {
+		async getLatestProducts() {
+			this.$store.commit('setIsLoading', true)
+			const { data, error } = await supabase
+				.from('products')
+				.select('*')
+				.order('id', { ascending: false })
+				.limit(4)
+
+				if(error) {
+					console.log(error)
+				}
+				console.log(data)
+
+			this.latestProducts = data
+			this.$store.commit('setIsLoading', false)
 		}
 	}
 }
