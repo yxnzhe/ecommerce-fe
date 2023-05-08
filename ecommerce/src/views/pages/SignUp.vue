@@ -187,6 +187,7 @@ export default {
             state: "",
             zipCode: "",
             error: "",
+            msg: "",
             agreeTnC: false,
             terms_and_condition: false,
             registerToken: nanoid(),
@@ -210,10 +211,13 @@ export default {
 
             sendEmail(params)
             .then((response) => {
-                console.log(response)
+                if(response == 200) {
+                    this.msg = "Please check your email to activate your account."
+                }
+
             })
             .catch((error) => {
-                console.log(error)
+                this.error = error
             })
         },
 
@@ -254,7 +258,6 @@ export default {
                     this.error = details_error.message
                 } 
                 else {
-                    console.log(details[0].id)
                     const hased_password = this.hashPassword(this.password)
                     const { data: users, error: users_error } = await supabase
                     .from ('users')
@@ -274,7 +277,6 @@ export default {
                         this.error = users_error.message
                     } 
                     else {
-                        console.log(users[0].id)
                         const { error: token_error } = await supabase
                         .from('user_token')
                         .insert([

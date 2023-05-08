@@ -84,7 +84,7 @@ export default {
                 .update({ last_login: new Date().toISOString() })
                 .eq('email', email)
             if (error) {
-                console.log(error);
+                this.errorMsg = error.message;
             }
         },
         async login() {
@@ -96,7 +96,7 @@ export default {
                     .select("*")
                     .eq('email', this.email)
                 if (error) {
-                    console.log(error);
+                    this.errorMsg = error.message;
                 } else {
                     if(data.length == 1) {
                         const pepper_password = this.password + pepper;
