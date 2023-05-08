@@ -5,6 +5,9 @@ import RegisterPage from '../views/pages/SignUp.vue'
 import VerifyEmailPage from '../views/static/VerifyEmail.vue'
 import TermsAndConditionsPage from '../views/static/TermsConditions.vue'
 import ActivatedEmail from '../views/static/ActivatedEmail.vue'
+import ProductPage from '../views/products/ProductPage.vue'
+import CategoryPage from '../views/category/CategoryPage.vue'
+import SearchPage from '../views/search/SearchProduct.vue'
 
 const routes = [
   {
@@ -36,6 +39,21 @@ const routes = [
     path: '/activation/:uid/:token',
     name: 'Activated Email',
     component: ActivatedEmail
+  },
+  {
+    path: '/products/:id',
+    name: 'Product Page',
+    component: ProductPage
+  },
+  {
+    path: '/category/:id',
+    name: 'Category Page',
+    component: CategoryPage
+  },
+  {
+    path: '/search',
+    name: 'Search Page',
+    component: SearchPage
   }
   // {
   //   path: '/about',

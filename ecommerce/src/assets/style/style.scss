@@ -65,3 +65,20 @@ $white-text: #FFFFFF;
         color: $white-text;
     }
 }
+
+.product-images {
+    margin-top: -1.25rem;
+    margin-left: -1.25rem;
+    margin-right: -1.25rem;
+
+    .center-image {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .smaller-image {
+        width: 50%;
+        text-align: center;
+    }
+}
