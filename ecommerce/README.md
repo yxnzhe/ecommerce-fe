@@ -1,4 +1,4 @@
-# ecommerce
+# ZedStore
 
 ## Project setup
 ```
