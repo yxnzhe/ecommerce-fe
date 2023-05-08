@@ -68,7 +68,7 @@
 
                 <div class="field">
                     <div class="control">
-                        <button class="button is-link" @click="validate">Next</button>
+                        <button class="button is-purple" @click="validate">Next</button>
                     </div>
                 </div>
             </div>
@@ -156,7 +156,7 @@
         
                 <div class="field">
                     <div class="control">
-                        <button class="button is-link" @click="register()">Register</button>
+                        <button class="button is-purple" @click="register()">Register</button>
                     </div>
                 </div>
             </div>
@@ -170,6 +170,7 @@ import { nanoid } from 'nanoid';
 import bcrypt from 'bcryptjs';
 import { useVuelidate } from '@vuelidate/core'
 import { required, email, numeric, sameAs, minLength, maxLength, helpers } from '@vuelidate/validators'
+import sendEmail from '@/emailjs'
 
 export default {
     name: "SignUp",
@@ -199,6 +200,23 @@ export default {
         return { v$: useVuelidate() }
     },
     methods: {
+        sendEmail(user_id, activation_token) {
+            const params = {
+                name: this.name,
+                token: activation_token,
+                user_email: this.email,
+                user_id: user_id
+            }
+
+            sendEmail(params)
+            .then((response) => {
+                console.log(response)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        },
+
         validate() {
             this.v$.$validate()
             if(!this.v$.name.$error && !this.v$.email.$error && !this.v$.phone.$error && !this.v$.password.$error && !this.v$.confirmPassword.$error) {
@@ -272,6 +290,7 @@ export default {
                             this.error = token_error.message
                         } 
                         else {
+                            this.sendEmail(this.user_id, this.registerToken)
                             this.$router.push({ name: 'Verify Email' })
                         }
                     }

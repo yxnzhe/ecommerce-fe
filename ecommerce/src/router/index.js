@@ -4,6 +4,7 @@ import LoginPage from '../views/pages/SignIn.vue'
 import RegisterPage from '../views/pages/SignUp.vue'
 import VerifyEmailPage from '../views/static/VerifyEmail.vue'
 import TermsAndConditionsPage from '../views/static/TermsConditions.vue'
+import ActivatedEmail from '../views/static/ActivatedEmail.vue'
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: '/terms-and-conditions',
     name: 'Terms and Conditions',
     component: TermsAndConditionsPage
+  },
+  {
+    path: '/activation/:uid/:token',
+    name: 'Activated Email',
+    component: ActivatedEmail
   }
   // {
   //   path: '/about',

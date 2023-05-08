@@ -6,7 +6,7 @@
             </div>
             <div class="email-text mt-5">
                 <h1 class="title">Verify your email</h1>
-                <p class="subtitle">Please check your email for the verification link.</p>
+                <p class="subtitle mt-1">Please check your email for the verification link.</p>
             </div>
         </div>
     </div>
@@ -17,16 +17,3 @@ export default {
     name: "VerifyEmail",
 }
 </script>
-
-<style scoped>
-.verify-email-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 70vh;
-}
-
-.verify-email {
-  text-align: center;
-}
-</style>

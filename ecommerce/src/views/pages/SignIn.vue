@@ -35,10 +35,16 @@
             <div class="field">
                 <a class="is-pulled-right" href="/forgot-password">Forgot password?</a>
             </div>
+
+            <div class="field">
+                <span class="text-danger" v-if="errorMsg">
+                    {{ errorMsg }}
+                </span>
+            </div>
             
             <div class="field">
                 <div class="control">
-                    <button class="button is-link" @click="login()">Login</button>
+                    <button class="button is-purple" @click="login()">Login</button>
                 </div>
             </div>
         </div>
@@ -49,7 +55,7 @@
 import { supabase } from '@/supabase';
 import bcrypt from 'bcryptjs';
 import { useVuelidate } from '@vuelidate/core'
-import { required, email, minLength, helpers } from '@vuelidate/validators';
+import { required, email, helpers } from '@vuelidate/validators';
 
 export default {
     name: 'SignIn',
@@ -57,6 +63,7 @@ export default {
         return {
             email: '',
             password: '',
+            errorMsg: '',
         }
     },
     mounted () {
@@ -91,14 +98,19 @@ export default {
                 if (error) {
                     console.log(error);
                 } else {
-                    const pepper_password = this.password + pepper;
-                    const match = await bcrypt.compare(pepper_password, data[0].password);
-                    if (match) {
-                        this.update_last_login(this.email);
-                        this.$store.commit('setCurrentUser', data[0]);
-                        this.$router.push('/');
-                    } else {
-                        console.log('Incorrect password');
+                    if(data.length == 1) {
+                        const pepper_password = this.password + pepper;
+                        const match = await bcrypt.compare(pepper_password, data[0].password);
+                        if (match) {
+                            this.update_last_login(this.email);
+                            this.$store.commit('setCurrentUser', data[0]);
+                            this.$router.push('/');
+                        } else {
+                            this.errorMsg = 'Invalid email or password'
+                        }
+                    }
+                    else {
+                        this.errorMsg = 'Invalid email or password'
                     }
                 }
             }
@@ -112,7 +124,6 @@ export default {
             },
             password: {
                 required: helpers.withMessage('Password is required', required),
-                minLength: helpers.withMessage('Password must contain at least 8 characters', minLength(8))
             },
         }
     }
