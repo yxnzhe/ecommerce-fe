@@ -47,7 +47,7 @@ export default {
             .eq('token', user_token)
 
             if(token_error) {
-                console.log(token_error)
+                this.msg = token_error.message
             } 
             else {
                 const user_data = token_data[0]
@@ -60,7 +60,7 @@ export default {
                         .eq('id', user_data.user_id)
 
                         if(user_info_error) {
-                            console.log(user_info_error)
+                            this.msg = user_info_error.message
                         }
                         else {
                             const { error: token_error_verified } = await supabase
@@ -69,11 +69,10 @@ export default {
                             .eq('token', user_token)
 
                             if(token_error_verified) {
-                                console.log(token_error_verified)
+                                this.msg = token_error_verified.message
                             }
                             else {
                                 this.isVerified = true
-                                console.log('Email verified')
                             }
                         }
                     }
