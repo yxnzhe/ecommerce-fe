@@ -1,1 +1,1 @@
-# ecommerce-fe
+# ZedStore-fe
